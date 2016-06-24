@@ -10,7 +10,7 @@ main = do
         (show 
             (getDayList !! 
             (fromIntegral 
-            (calculateCurrentDay
+            (calculateCurrentDayIndex
             (calculateElapsedDays timestamp
             )))))
 
@@ -26,7 +26,7 @@ calculateElapsedDays ts = ts `div` 86400
 
 
 -- add 3 beacuse the 1.1.1970 was a Thursday
-calculateCurrentDay :: Integer-> Integer
-calculateCurrentDay x = (x + 3) `mod` 7
+calculateCurrentDayIndex :: Integer-> Integer
+calculateCurrentDayIndex x = (x + 3) `mod` 7
 
 
