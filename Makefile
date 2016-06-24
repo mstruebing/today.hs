@@ -1,3 +1,2 @@
-makey: today.hs   
-	ghc -Wall today.hs
-	
+target: today.hs   
+	ghc -Wall today.hs && rm today.hi today.o
