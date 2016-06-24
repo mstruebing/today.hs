@@ -1,17 +1,15 @@
+module Today (Day(..), getCurrentTimestamp, getCurrentDay) where
 import Data.Time.Clock.POSIX(getPOSIXTime)
 
 data Day = Monday | Tuesday | Wednesday | Thursday | Friday | Saturday | Sunday
-    deriving (Show, Bounded, Enum)
+    deriving (Eq, Show, Bounded, Enum)
 
-main :: IO ()
-main = do
-    timestamp <- getCurrentTimestamp
-    putStrLn 
-        (show 
-            (getDayList !! (fromIntegral $ 
-                            calculateCurrentDayIndex . 
-                            calculateElapsedDays $ 
-                            timestamp)))
+-- Returns the current day
+getCurrentDay :: Integer -> Day
+getCurrentDay ts = getDayList !! (fromIntegral $
+                                calculateCurrentDayIndex .
+                                calculateElapsedDays $
+                                ts)
 
 -- create a list with all days in order
 getDayList :: [Day]
