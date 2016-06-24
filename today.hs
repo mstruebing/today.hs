@@ -6,14 +6,19 @@ data Day = Monday | Tuesday | Wednesday | Thursday | Friday | Saturday | Sunday
 main :: IO ()
 main = do
     timestamp <- getCurrentTimestamp
+--    putStrLn 
+--        (show 
+--            (getDayList !! 
+--            (fromIntegral 
+--            (calculateCurrentDayIndex
+--            (calculateElapsedDays timestamp
+--            )))))
     putStrLn 
         (show 
-            (getDayList !! 
-            (fromIntegral 
-            (calculateCurrentDayIndex
-            (calculateElapsedDays timestamp
-            )))))
-
+            (getDayList !! (fromIntegral $ 
+                            calculateCurrentDayIndex . 
+                            calculateElapsedDays $ 
+                            timestamp)))
 
 getDayList :: [Day]
 getDayList = [minBound .. maxBound] :: [Day]
