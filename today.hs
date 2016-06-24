@@ -16,7 +16,7 @@ main = do
 
 
 getDayList :: [Day]
-getDayList = iterate succ Monday
+getDayList = [minBound .. maxBound] :: [Day]
 
 getCurrentTimestamp :: IO Integer
 getCurrentTimestamp = (round `fmap` getPOSIXTime)
