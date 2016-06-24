@@ -1,7 +1,7 @@
-import Today (getCurrentTimestamp, getCurrentDay)
+import Today (getCurrentTimestamp, getDayFromTimestamp)
 
 main :: IO ()
 main = do
     timestamp <- getCurrentTimestamp
     putStrLn 
-        (show $ getCurrentDay timestamp)
+        (show $ getDayFromTimestamp timestamp)
