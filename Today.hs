@@ -16,7 +16,7 @@ getDayFromTimestamp ts = getDayFromIndex .
 getDayFromIndex :: Int -> Day
 getDayFromIndex x
     | x < 0 || x > 6 = error "Index must be between 0 and 6"
-    | otherwise = toEnum x::Day
+    | otherwise = toEnum x :: Day
 
 -- returns the current timestamp
 getCurrentTimestamp :: IO Integer
