@@ -6,10 +6,11 @@ data Day = Monday | Tuesday | Wednesday | Thursday | Friday | Saturday | Sunday
 
 -- Returns the current day
 getDayFromTimestamp :: Integer -> Day
-getDayFromTimestamp ts = getDayFromIndex (fromIntegral $
-                                calculateDayIndex .
-                                calculateElapsedDays $
-                                ts)
+getDayFromTimestamp ts = getDayFromIndex . 
+                            fromIntegral .
+                            calculateDayIndex .
+                            calculateElapsedDays $
+                            ts
 
 -- returns a day of a given index
 getDayFromIndex :: Int -> Day
