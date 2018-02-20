@@ -47,7 +47,7 @@ Create a Main.hs file and a Makefile - `touch Main.hs Makefile`.
 
 Lets start with our Main.hs file
 
-```
+``` haskell
 -- our main function
 main :: IO ()
 main = do
@@ -58,7 +58,7 @@ main = do
 To test it write `ghc -Wall Main.hs` in our terminal.
 You should see something like this as output:
 
-```
+``` shell
 $ ghc -Wall Main.hs     
 [1 of 1] Compiling Main             ( Main.hs, Main.o )
 Linking Main ...
@@ -72,7 +72,7 @@ Now execute `./Main` and you should see `Hello Haskell!` on your terminal.
 
 Because we don't always want to remember which flags and options we used let's write a makefile for that!
 
-```
+``` Makefile
 # the compile with -Wall flags(all errors and warnings)
 COMPILER = ghc -Wall 
 # our main module
@@ -96,7 +96,7 @@ clean:
 NOTICE: you have to use tabs in the makefile or it won't work.
 Now type `make` into your terminal.
 
-```
+``` shell
 $ make
 ghc -Wall Main.hs
 [1 of 1] Compiling Main             ( Main.hs, Main.o )
@@ -110,7 +110,7 @@ are used and we automatically get rid of the unused files.
 Fine, now we are forming the "Hello Haskell!" into a function. How do we do that?
 Simply so:
 
-```
+``` haskell
 -- our main function
 main :: IO ()
 main = do
@@ -147,7 +147,7 @@ If we try that in the ghci with `:m Data.Time.Clock.POSIX` and type `getPOSIXTim
 we see that this is actually with some positions after the decimal point. To cut
 that we can use `fmap` like : `fmap round getPOSIXTime`
 
-```
+``` haskell
 import Data.Time.Clock.POSIX(getPOSIXTime)
 
 -- our main function
@@ -169,7 +169,7 @@ From the timestamp we now can calculate how many days are elapsed since the
 timestamp started running. How do we do that? A day has 86400 seconds, so we
 simply divide the timestamp by this number and we get the result.
 
-```
+``` haskell
 import Data.Time.Clock.POSIX(getPOSIXTime)
 
 -- our main function
@@ -200,7 +200,7 @@ Because we are lazy, lets tweak our Makefile a bit. We add a target start which
 will start the compiled program, so that we don't have to do this manually each
 time we change something
 
-```
+``` Makefile
 # the compile with -Wall flags(all errors and warnings)
 COMPILER = ghc -Wall 
 # our main module
@@ -228,7 +228,7 @@ start:
 Run make and you will see how many days are elapsed since the glorious creation
 of the timestamp.
 
-```
+``` shell
 $ make
 ghc -Wall Main.hs
 [1 of 1] Compiling Main             ( Main.hs, Main.o )
@@ -241,7 +241,7 @@ rm Main.o Main.hi
 Now we need a function which calculates us the current index of the day based on
 the elapsed days. 
 
-```
+``` haskell
 import Data.Time.Clock.POSIX(getPOSIXTime)
 
 -- our main function
@@ -271,7 +271,7 @@ the result. The mod function is just the modulo function.
 
 Now run make and I get this now:
 
-```
+``` shell
 $ make
 ghc -Wall Main.hs
 [1 of 1] Compiling Main             ( Main.hs, Main.o )
@@ -285,7 +285,7 @@ This will be Wednesday if we start at 0 but now is Saturday. If we do a bit
 research we get that the 01.01.1970 was a Thursday, so we have to place an offset.
 Adjust the function like this:
 
-```
+``` haskell
 import Data.Time.Clock.POSIX(getPOSIXTime)
 
 -- our main function
@@ -310,7 +310,7 @@ calculateDayIndex x = (x + 3) `mod` 7
 
 And Again:
 
-```
+``` shell
 $ make
 ghc -Wall Main.hs
 [1 of 1] Compiling Main             ( Main.hs, Main.o )
@@ -325,7 +325,7 @@ days.
 
 We will do this like this:
 
-```
+``` haskell
 import Data.Time.Clock.POSIX(getPOSIXTime)
 
 -- Our Day data type
@@ -357,7 +357,7 @@ We derive from the Show data type to make the days printable and the Enum data t
 Now we can write a function that gives us the current day from the index. Let's do
 this.
 
-```
+``` haskell
 import Data.Time.Clock.POSIX(getPOSIXTime)
 
 -- Our Day data type
@@ -394,7 +394,7 @@ Now we add an so called edge case to our getDayFromIndex function if it were
 called with a to high or low argument, because we soon split it into modules and
 we can't be sure that anybody else will use this module somewhere else.
 
-```
+``` haskell
 import Data.Time.Clock.POSIX(getPOSIXTime)
 
 -- Our Day data type
@@ -436,7 +436,7 @@ But because we are cool developer we want to split this into modules.
 
 Create a new file called `Today.hs` and adjust it like this:
 
-```
+``` haskell
 module Today (Day(..), getCurrentTimestamp, getDayFromTimestamp) where
 import Data.Time.Clock.POSIX(getPOSIXTime)
 
@@ -477,7 +477,7 @@ others. With the Day(..) we will export the complete Day data type.
 
 Now we adjust our `Main.hs` file:
 
-```
+``` haskell
 import Today (getCurrentTimestamp, getDayFromTimestamp)
 
 main :: IO ()
@@ -490,7 +490,7 @@ main = do
 
 Of course we need to adjust our Makefile too:
 
-```
+``` Makefile
 COMPILER = ghc -Wall
 
 PROGNAME = Today
@@ -513,7 +513,7 @@ start:
 
 Just run make and it works:
 
-```
+``` shell
 $ make
 ghc -Wall -o today Main.hs 
 [1 of 2] Compiling Today            ( Today.hs, Today.o )
@@ -534,7 +534,7 @@ So just type `cabal install hspec` and that is all.
 
 Create a file `Test.hs`
 
-```
+``` haskell
 import Test.Hspec
 import Test.QuickCheck
 import Control.Exception (evaluate)
@@ -558,7 +558,7 @@ we have to add the Eq type class to our Day datatype, because shouldBe only work
 on this kind of Types.
 So we adjust our Day dataype like this:
 
-```
+``` haskell
 module Today (Day(..), getCurrentTimestamp, getDayFromTimestamp) where
 import Data.Time.Clock.POSIX(getPOSIXTime)
 
@@ -599,7 +599,7 @@ Run `runhaskell Test.hs` again and you could see our test pass.
 We want that our tests are running everytime before we compile this tool.
 So back to our Makefile.
 
-```
+``` Makefile
 COMPILER = ghc -Wall
 
 PROGNAME = Today
@@ -626,7 +626,7 @@ start:
 
 If we now run `make` we could see how our tests are running first.
 
-```
+``` shell
 $ make
 runhaskell Test.hs
 
